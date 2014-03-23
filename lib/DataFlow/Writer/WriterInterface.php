@@ -11,6 +11,8 @@
 
 namespace DataFlow\Writer;
 
-interface WriterInterface
+use Exporter\Writer\WriterInterface as Base;
+
+interface WriterInterface extends Base
 {
 }

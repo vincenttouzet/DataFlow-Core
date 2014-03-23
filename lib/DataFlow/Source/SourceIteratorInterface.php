@@ -11,6 +11,8 @@
 
 namespace DataFlow\Source;
 
-interface SourceIteratorInterface
+use Exporter\Source\SourceIteratorInterface as Base;
+
+interface SourceIteratorInterface extends Base
 {
 }
