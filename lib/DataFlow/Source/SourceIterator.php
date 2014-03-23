@@ -28,8 +28,8 @@ trait SourceIterator
         if ($this->getMapper()) {
             $mappedData = array();
             foreach ($data as $key => $value) {
-                if ($this->getMapper()->hasMapping($key)) {
-                    $mappedData[$this->getMapper()->getMapping($key)] = $value;
+                if ($index = $this->getMapper()->getMapping($key)) {
+                    $mappedData[$index] = $value;
                 }
             }
             $data = $mappedData;

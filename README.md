@@ -4,7 +4,7 @@
 [![Code Coverage](https://scrutinizer-ci.com/g/vincenttouzet/DataFlow-Core/badges/coverage.png?s=3168f2e9c39491a69e32597aaa3e92628c6a1a2f)](https://scrutinizer-ci.com/g/vincenttouzet/DataFlow-Core/)
 [![Build Status](https://travis-ci.org/vincenttouzet/DataFlow-Core.svg?branch=master)](https://travis-ci.org/vincenttouzet/DataFlow-Core)
 
-DataFlow is a library base on [**sonata/exporter**][1] to aggregate or merge multiple data sources and export to multiple writers.
+DataFlow is a library based on [**sonata/exporter**][1] to aggregate or merge multiple data sources and export to multiple writers.
 
 ## Usage
 

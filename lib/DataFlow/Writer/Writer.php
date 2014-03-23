@@ -27,8 +27,8 @@ trait Writer
         if ($this->getMapper()) {
             $mappedData = array();
             foreach ($data as $key => $value) {
-                if ($this->getMapper()->hasMapping($key)) {
-                    $mappedData[$this->getMapper()->getMapping($key)] = $data[$key];
+                if ($index = $this->getMapper()->getMapping($key)) {
+                    $mappedData[$index] = $data[$key];
                 }
             }
             $data = $mappedData;
