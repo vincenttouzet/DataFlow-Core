@@ -1,0 +1,22 @@
+{
+    "name": "dataflow/core",
+    "description": "DataFlow Core project",
+    "minimum-stability": "dev",
+    "authors": [
+        {
+            "name": "Vincent Touzet",
+            "email": "vincent.touzet@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">= 5.4",
+        "sonata-project/exporter": "dev-master",
+        "doctrine/collections": "1.2.*@dev"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "3.7.*"
+    },
+    "autoload": {
+        "psr-0": { "DataFlow": "lib/" }
+    }
+}
