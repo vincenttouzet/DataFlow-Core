@@ -1,6 +1,9 @@
 # DataFlow Core
 
-DataFlow is a library to aggregate or merge multiple data sources and export to multiple writers.
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/vincenttouzet/DataFlow-Core/badges/quality-score.png?s=2771d9415f76506ededfec4790bb69b0cef62ba2)](https://scrutinizer-ci.com/g/vincenttouzet/DataFlow-Core/)
+
+
+DataFlow is a library base on [**sonata/exporter**][1] to aggregate or merge multiple data sources and export to multiple writers.
 
 ## Usage
 
@@ -24,3 +27,5 @@ $handler->aggregate();
 
 ```
 
+
+[1]: https://github.com/sonata-project/exporter
