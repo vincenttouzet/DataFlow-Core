@@ -72,7 +72,6 @@ class Aggregator
         $defaultValues = $this->getDefaultValues();
         foreach ($this->sources as $source) {
             foreach ($source as $data) {
-                $data = array_merge($defaultValues, $data);
                 $identifier = $data[$primary];
                 if (isset($mergedData[$identifier])) {
                     $mergedData[$identifier] = array_merge(
@@ -80,6 +79,7 @@ class Aggregator
                         $data
                     );
                 } else {
+                    $data = array_merge($defaultValues, $data);
                     $mergedData[$identifier] = $data;
                 }
             }

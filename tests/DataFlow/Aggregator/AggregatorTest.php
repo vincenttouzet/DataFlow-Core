@@ -69,7 +69,11 @@ class AggregatorTest extends \PHPUnit_Framework_TestCase
         $this->aggregator->merge('username');
         $merged = $this->writer->getElements();
         $this->assertEquals(3, count($merged));
+        $this->assertEquals('johndoe', $merged[0]['username']);
         $this->assertEquals('johndoe@domain.com', $merged[0]['email']);
+        $this->assertEquals('John 1', $merged[0]['firstname']);
+        $this->assertEquals('Doe', $merged[0]['name']);
+        $this->assertEquals('25', $merged[0]['age']);
     }
 
     public function getGetAggregatedHeaders()
