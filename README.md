@@ -28,5 +28,8 @@ $handler->aggregate();
 
 ```
 
+You can also add [**mappers**][2] and [**filters**][3]
 
 [1]: https://github.com/sonata-project/exporter
+[2]: docs/mappers.md
+[3]: docs/filters.md
