@@ -11,6 +11,7 @@
 
 namespace DataFlow\Source;
 
+use DataFlow\Filter\EqualFilter;
 use DataFlow\Mapper\Mapper;
 
 class SourceIteratorTest extends \PHPUnit_Framework_TestCase
@@ -41,14 +42,49 @@ class SourceIteratorTest extends \PHPUnit_Framework_TestCase
     {
         $mapper = new Mapper();
         $mapper->addMapping('username', 'login');
-        $mapper->addMapping('firstname', 'firstname');
         $mapper->addMapping('name', 'lastname');
         $this->source->setMapper($mapper);
         $i = 0;
         foreach ($this->source as $data) {
-            $original = $this->data[$i]['username'];
-            $this->assertEquals($original, $data['login']);
+            $original = $this->data[$i];
+            $this->assertEquals($original['username'], $data['login']);
+            $this->assertEquals($original['firstname'], $data['firstname']);
+            $this->assertEquals($original['name'], $data['lastname']);
             $i++;
         }
+    }
+
+    public function testUseFilter()
+    {
+        // just keep when username equals johndoe_2
+        $filter = new EqualFilter('username', 'johndoe_2');
+        $this->source->addFilter($filter);
+        $i = 0;
+        foreach ($this->source as $data) {
+            $i++;
+        }
+        $this->assertEquals(1, $i);
+    }
+
+    public function testUseFilterOnLast()
+    {
+        $filter = new EqualFilter('username', 'johndoe');
+        $this->source->addFilter($filter);
+        $i = 0;
+        foreach ($this->source as $data) {
+            $i++;
+        }
+        $this->assertEquals(1, $i);
+    }
+
+    public function testUseFilterNone()
+    {
+        $filter = new EqualFilter('username', 'not_found');
+        $this->source->addFilter($filter);
+        $i = 0;
+        foreach ($this->source as $data) {
+            $i++;
+        }
+        $this->assertEquals(0, $i);
     }
 }

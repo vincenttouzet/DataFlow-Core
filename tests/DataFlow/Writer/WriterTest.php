@@ -11,6 +11,7 @@
 
 namespace DataFlow\Writer;
 
+use DataFlow\Filter\EqualFilter;
 use DataFlow\Mapper\Mapper;
 
 class WriterTest extends \PHPUnit_Framework_TestCase
@@ -40,7 +41,6 @@ class WriterTest extends \PHPUnit_Framework_TestCase
     {
         $mapper = new Mapper();
         $mapper->addMapping('username', 'login');
-        $mapper->addMapping('firstname', 'firstname');
         $mapper->addMapping('name', 'lastname');
         $this->writer->setMapper($mapper);
 
@@ -50,5 +50,33 @@ class WriterTest extends \PHPUnit_Framework_TestCase
         $mappedData = $this->writer->getElements();
 
         $this->assertEquals($this->data[0]['username'], $mappedData[0]['login']);
+        $this->assertEquals($this->data[0]['firstname'], $mappedData[0]['firstname']);
+        $this->assertEquals($this->data[0]['name'], $mappedData[0]['lastname']);
+    }
+
+    public function testUseFilter()
+    {
+        $filter = new EqualFilter('username', 'johndoe');
+        $this->writer->addFilter($filter);
+
+        $this->writer->write($this->data[0]);
+        $this->writer->write($this->data[1]);
+
+        $writedData = $this->writer->getElements();
+
+        $this->assertEquals(1, count($writedData));
+    }
+
+    public function testUseFilterNone()
+    {
+        $filter = new EqualFilter('username', 'not_found');
+        $this->writer->addFilter($filter);
+
+        $this->writer->write($this->data[0]);
+        $this->writer->write($this->data[1]);
+
+        $writedData = $this->writer->getElements();
+
+        $this->assertEquals(0, count($writedData));
     }
 }

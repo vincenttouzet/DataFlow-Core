@@ -11,11 +11,13 @@
 
 namespace DataFlow\Writer;
 
+use DataFlow\Filter\FilterContainer;
 use DataFlow\Mapper\MapperContainer;
 
 trait Writer
 {
     use MapperContainer;
+    use FilterContainer;
 
     /**
      * Override write of WriterInterface to export data with mapping
@@ -29,9 +31,20 @@ trait Writer
             foreach ($data as $key => $value) {
                 if ($index = $this->getMapper()->getMapping($key)) {
                     $mappedData[$index] = $data[$key];
+                } else {
+                    $mappedData[$key] = $data[$key];
                 }
             }
             $data = $mappedData;
+        }
+        if ($filters = $this->getFilters()) {
+            $ok = true;
+            foreach ($filters as $filter) {
+                $ok = $ok && call_user_func($filter, $data);
+            }
+            if (!$ok) {
+                return;
+            }
         }
         parent::write($data);
     }
