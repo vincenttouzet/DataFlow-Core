@@ -1,7 +1,6 @@
 {
     "name": "dataflow/core",
     "description": "DataFlow Core project",
-    "minimum-stability": "dev",
     "authors": [
         {
             "name": "Vincent Touzet",
