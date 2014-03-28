@@ -1,6 +1,7 @@
 {
     "name": "dataflow/core",
     "description": "DataFlow Core project",
+    "license": "MIT",
     "authors": [
         {
             "name": "Vincent Touzet",
