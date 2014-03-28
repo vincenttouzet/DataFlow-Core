@@ -50,7 +50,7 @@ class Aggregator
         $this->writer->open();
         foreach ($this->sources as $source) {
             foreach ($source as $data) {
-                $data = array_merge($defaultValues, $data);
+                $data = $this->mergeData($defaultValues, $data);
                 $this->writer->write($data);
             }
         }
@@ -74,12 +74,12 @@ class Aggregator
             foreach ($source as $data) {
                 $identifier = $data[$primary];
                 if (isset($mergedData[$identifier])) {
-                    $mergedData[$identifier] = array_merge(
+                    $mergedData[$identifier] = $this->mergeData(
                         $mergedData[$identifier],
                         $data
                     );
                 } else {
-                    $data = array_merge($defaultValues, $data);
+                    $data = $this->mergeData($defaultValues, $data);
                     $mergedData[$identifier] = $data;
                 }
             }
@@ -145,6 +145,17 @@ class Aggregator
         }
 
         return $defaultValues;
+    }
+
+    protected function mergeData($default, $data)
+    {
+        $result = array_merge($default, $data);
+        foreach ($result as $key => &$value) {
+            if (isset($default[$key]) && !$value && $value !== $default[$key]) {
+                $value = $default[$key];
+            }
+        }
+        return $result;
     }
 
     /**

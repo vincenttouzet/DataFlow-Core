@@ -28,26 +28,32 @@ class AggregatorTest extends \PHPUnit_Framework_TestCase
                 array(
                     'username' => 'johndoe',
                     'firstname' => 'John 1',
-                    'name' => 'Doe',
+                    'name' => '',
+                    'email' => 'johndoe@domain.com',
                 ),
                 array(
                     'username' => 'johndoe_2',
                     'firstname' => 'John 2',
                     'name' => 'Doe',
+                    'email' => 'email@example.com',
                 ),
             )
         );
         $source2 = new ArraySourceIterator(
             array(
                 array(
+                    'username' => 'johndoe_2',
+                    'email' => 'email@example.com',
+                    'age' => '42',
+                    'firstname' => 'John 2.1',
+                    'name' => '',
+                ),
+                array(
                     'username' => 'johndoe',
                     'email' => 'johndoe@domain.com',
                     'age' => '25',
-                ),
-                array(
-                    'username' => 'johndoe3',
-                    'email' => 'email@example.com',
-                    'age' => '42',
+                    'firstname' => 'John 1.1',
+                    'name' => 'Doe',
                 ),
             )
         );
@@ -68,12 +74,19 @@ class AggregatorTest extends \PHPUnit_Framework_TestCase
     {
         $this->aggregator->merge('username');
         $merged = $this->writer->getElements();
-        $this->assertEquals(3, count($merged));
+        $this->assertEquals(2, count($merged));
+        // test values
         $this->assertEquals('johndoe', $merged[0]['username']);
         $this->assertEquals('johndoe@domain.com', $merged[0]['email']);
-        $this->assertEquals('John 1', $merged[0]['firstname']);
+        $this->assertEquals('John 1.1', $merged[0]['firstname']);
         $this->assertEquals('Doe', $merged[0]['name']);
         $this->assertEquals('25', $merged[0]['age']);
+
+        $this->assertEquals('johndoe_2', $merged[1]['username']);
+        $this->assertEquals('email@example.com', $merged[1]['email']);
+        $this->assertEquals('John 2.1', $merged[1]['firstname']);
+        $this->assertEquals('Doe', $merged[1]['name']);
+        $this->assertEquals('42', $merged[1]['age']);
     }
 
     public function getGetAggregatedHeaders()
@@ -94,6 +107,5 @@ class AggregatorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('-', $elements[0]['age']);
         $this->assertEquals('-', $elements[1]['age']);
         $this->assertEquals('-', $elements[2]['name']);
-        $this->assertEquals('-', $elements[3]['name']);
     }
 }
