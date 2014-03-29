@@ -101,12 +101,14 @@ class Aggregator
     public function getAggregateHeaders()
     {
         $aggregatedHeaders = array();
+        /* @var SourceIteratorInterface $source */
         foreach ($this->sources as $source) {
             $source->rewind();
-            $source->next();
-            $headers = $source->current();
-            $headers = array_flip($headers);
-            $aggregatedHeaders = array_merge($aggregatedHeaders, $headers);
+            if ($source->valid()) {
+                $headers = $source->current();
+                $headers = array_flip($headers);
+                $aggregatedHeaders = array_merge($aggregatedHeaders, $headers);
+            }
         }
 
         return $aggregatedHeaders;

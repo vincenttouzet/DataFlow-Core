@@ -89,8 +89,9 @@ class AggregatorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('42', $merged[1]['age']);
     }
 
-    public function getGetAggregatedHeaders()
+    public function testGetGetAggregatedHeaders()
     {
+        $this->aggregator->addSource(new ArraySourceIterator(array(array('username'=>'jojo'))));
         $headers = $this->aggregator->getAggregateHeaders();
         $this->assertTrue(in_array('username', $headers));
         $this->assertTrue(in_array('firstname', $headers));
